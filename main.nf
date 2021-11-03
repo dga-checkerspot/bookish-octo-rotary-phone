@@ -6,7 +6,7 @@ process correct {
 	memory '96G'
 	
 	input:
-	path 'pacbhifi' from sequences1
+	path pacbhifi from sequences1
 	
 	output:
 	file 'pacb/pacbhifi.correctedReads.fasta.gz' into reads11
