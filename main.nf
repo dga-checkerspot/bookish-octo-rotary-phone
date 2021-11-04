@@ -13,6 +13,27 @@ process correct {
 	
 	"""
 	canu -correct -p pacbhifi -d pacb genomeSize=32m -pacbio $pacbhifi
-
 	"""
 }
+
+process trim {
+	memory '96G'
+	
+	input:
+	path corrected from reads11
+	
+	output:
+	file 'pacbhifi/pacbhifi.trimmedReads.fasta.gz' into trimfile
+	
+	"""
+	canu -trim -p pacbhifi -d pacbhifi genomeSize=32m -corrected -pacbio $corrected
+	"""
+}
+
+
+
+
+
+
+
+
