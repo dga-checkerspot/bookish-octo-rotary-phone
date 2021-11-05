@@ -31,6 +31,42 @@ process trim {
 }
 
 
+//split trim into two channels
+trimfile.into{trim3; trim7}
+
+process assemble3 {
+	memory '96G'
+	
+	input:
+	path trimmed from trim3
+	
+	output:
+	file 'pacbhifi/*.fasta' into assembly3
+	
+	"""
+	canu -p pacbhifi3 -d pacbhifi genomeSize=32m correctedErrorRate=0.0375 -trimmed -corrected -pacbio $trimmed
+	"""
+}
+
+process assemble7 {
+	memory '96G'
+	
+	input:
+	path trimmed from trim7
+	
+	output:
+	file 'pacbhifi/*.fasta' into assembly7
+	
+	"""
+	canu -p pacbhifi7 -d pacbhifi genomeSize=32m correctedErrorRate=0.075 -trimmed -corrected -pacbio $trimmed
+	"""
+}
+
+
+
+
+
+
 
 
 
