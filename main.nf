@@ -3,7 +3,7 @@
 sequences1='s3://wgs.algae.hifi/pacb.fq.gz'
 
 process correct {
-	memory '96G'
+	memory '192G'
 	
 	input:
 	path pacbhifi from sequences1
