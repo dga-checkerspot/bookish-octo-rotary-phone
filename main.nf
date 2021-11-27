@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-sequences1='s3://wgs.algae.hifi/pacb.fq.gz'
+sequences1='s3://wgs.algae.hifi/30-536540905/rawdata/fastX/CHK22.subreads.fastq.gz'
 
 process correct {
 	memory '192G'
@@ -44,7 +44,7 @@ process assemble3 {
 	file 'pacbhifi/*.fasta' into assembly3
 	
 	"""
-	canu -p pacbhifi3 -d pacbhifi genomeSize=32m correctedErrorRate=0.0375 -trimmed -corrected -pacbio $trimmed
+	canu -p pacbhifi3 -d pacbhifi genomeSize=32m correctedErrorRate=0.075 -trimmed -corrected -pacbio $trimmed
 	"""
 }
 
@@ -58,11 +58,9 @@ process assemble7 {
 	file 'pacbhifi/*.fasta' into assembly7
 	
 	"""
-	canu -p pacbhifi7 -d pacbhifi genomeSize=32m correctedErrorRate=0.075 -trimmed -corrected -pacbio $trimmed
+	canu -p pacbhifi7 -d pacbhifi genomeSize=32m correctedErrorRate=0.12 -trimmed -corrected -pacbio $trimmed
 	"""
 }
-
-
 
 
 
