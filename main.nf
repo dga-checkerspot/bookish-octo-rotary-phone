@@ -58,7 +58,7 @@ process assemble7 {
 	file 'pacbhifi/*.fasta' into assembly7
 	
 	"""
-	canu -p pacbhifi7 -d pacbhifi genomeSize=32m correctedErrorRate=0.12 -trimmed -corrected -pacbio $trimmed
+	canu -p pacbhifi7 -d pacbhifi genomeSize=32m correctedErrorRate=0.12 M=16 m=8 -trimmed -corrected -pacbio $trimmed
 	"""
 }
 
