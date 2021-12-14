@@ -17,4 +17,4 @@ RUN conda config --add channels defaults
 RUN conda config --add channels bioconda
 RUN conda config --add channels conda-forge
 
-RUN conda install -c bioconda canu=2.2
+RUN conda install -c bioconda canu=2.1.1
