@@ -1,12 +1,16 @@
 #!/usr/bin/env nextflow
 
-sequences1='s3://wgs.algae.hifi/30-536540905/rawdata/fastX/CHK22.subreads.fastq.gz'
+params.pacB='s3://wgs.algae.hifi/30-536540905/rawdata/fastX/CHK22.subreads.fastq.gz'
+
+
+
+pacb_data = Channel.fromPath(params.pacB)
 
 process correct {
-	memory '192G'
+	memory '96G'
 	
 	input:
-	path pacbhifi from sequences1
+	path pacbhifi from pacb_data
 	
 	output:
 	file 'pacb/pacbhifi.correctedReads.fasta.gz' into reads11
