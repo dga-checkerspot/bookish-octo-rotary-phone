@@ -36,7 +36,22 @@ process trim {
 
 
 //split trim into two channels
-trimfile.into{trim3; trim7}
+trimfile.into{trim1; trim3; trim7; trim10}
+
+process assemble1 {
+	memory '96G'
+	
+	input:
+	path trimmed from trim1
+	
+	output:
+	file 'pacbhifi/*.fasta' into assembly3
+	
+	"""
+	canu -p pacbhifi3 -d pacbhifi genomeSize=32m correctedErrorRate=0.001 -trimmed -corrected -pacbio $trimmed
+	"""
+}
+
 
 process assemble3 {
 	memory '96G'
@@ -48,7 +63,7 @@ process assemble3 {
 	file 'pacbhifi/*.fasta' into assembly3
 	
 	"""
-	canu -p pacbhifi3 -d pacbhifi genomeSize=32m correctedErrorRate=0.075 -trimmed -corrected -pacbio $trimmed
+	canu -p pacbhifi3 -d pacbhifi genomeSize=32m correctedErrorRate=0.0375 -trimmed -corrected -pacbio $trimmed
 	"""
 }
 
@@ -62,11 +77,23 @@ process assemble7 {
 	file 'pacbhifi/*.fasta' into assembly7
 	
 	"""
-	canu -p pacbhifi7 -d pacbhifi genomeSize=32m correctedErrorRate=0.12 -trimmed -corrected -pacbio $trimmed
+	canu -p pacbhifi7 -d pacbhifi genomeSize=32m correctedErrorRate=0.075 -trimmed -corrected -pacbio $trimmed
 	"""
 }
 
-
+process assemble10 {
+	memory '96G'
+	
+	input:
+	path trimmed from trim10
+	
+	output:
+	file 'pacbhifi/*.fasta' into assembly7
+	
+	"""
+	canu -p pacbhifi7 -d pacbhifi genomeSize=32m correctedErrorRate=0.10 -trimmed -corrected -pacbio $trimmed
+	"""
+}
 
 
 
