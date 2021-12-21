@@ -7,7 +7,7 @@ params.pacB='s3://wgs.algae.hifi/30-536540905/rawdata/fastX/CHK22.subreads.fastq
 pacb_data = Channel.fromPath(params.pacB)
 
 process correct {
-	memory '96G'
+	memory '63G'
 	
 	input:
 	path pacbhifi from pacb_data
@@ -21,7 +21,7 @@ process correct {
 }
 
 process trim {
-	memory '96G'
+	memory '63G'
 	
 	input:
 	path corrected from reads11
@@ -54,7 +54,7 @@ process assemble1 {
 
 
 process assemble3 {
-	memory '96G'
+	memory '63G'
 	
 	input:
 	path trimmed from trim3
@@ -68,7 +68,7 @@ process assemble3 {
 }
 
 process assemble7 {
-	memory '96G'
+	memory '63G'
 	
 	input:
 	path trimmed from trim7
@@ -82,7 +82,7 @@ process assemble7 {
 }
 
 process assemble10 {
-	memory '96G'
+	memory '63G'
 	
 	input:
 	path trimmed from trim10
