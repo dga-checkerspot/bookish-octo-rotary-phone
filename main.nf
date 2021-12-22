@@ -16,7 +16,7 @@ process correct {
 	file 'pacb/pacbhifi.correctedReads.fasta.gz' into reads11
 	
 	"""
-	canu -correct -p pacbhifi -d pacb genomeSize=32m corMemory=56 -pacbio $pacbhifi
+	canu -correct -p pacbhifi -d pacb genomeSize=32m corMemory=16 -pacbio $pacbhifi
 	"""
 }
 
