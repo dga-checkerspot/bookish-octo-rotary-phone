@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-params.pacB='s3://wgs.algae.hifi/30-536540905/rawdata/fastX/CHK22.subreads.fastq.gz'
+params.pacB='s3://pipe.scratch.3/resources/hic/CHK*fastq.gz'
 
 
 
