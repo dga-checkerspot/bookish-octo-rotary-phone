@@ -13,10 +13,11 @@ process correct {
 	path pacbhifi from pacb_data
 	
 	output:
-	file 'pacb/pacbhifi.correctedReads.fasta.gz' into reads11
+	file "pacb/${pacbhifi.baseName}" into reads11
 	
 	"""
-	canu -correct -p pacbhifi -d pacb genomeSize=32m corMemory=16 -pacbio $pacbhifi
+	canu -correct -p ${pacbhifi.baseName} -d pacb genomeSize=32m corMemory=16 -pacbio $pacbhifi
+	mv 
 	"""
 }
 
@@ -27,10 +28,10 @@ process trim {
 	path corrected from reads11
 	
 	output:
-	file 'pacbhifi/pacbhifi.trimmedReads.fasta.gz' into trimfile
+	file "pacbhifi/${corrected.baseName}.trimmedReads.fasta.gz" into trimfile
 	
 	"""
-	canu -trim -p pacbhifi -d pacbhifi genomeSize=32m -corrected -pacbio $corrected
+	canu -trim -p ${corrected.baseName} -d pacbhifi genomeSize=32m -corrected -pacbio $corrected
 	"""
 }
 
@@ -48,7 +49,7 @@ process assemble1 {
 	file 'pacbhifi/*.fasta' into assembly1
 	
 	"""
-	canu -p pacbhifi3 -d pacbhifi genomeSize=32m correctedErrorRate=0.001 -trimmed -corrected -pacbio $trimmed
+	canu -p "${trimmed.baseName}_1" -d pacbhifi genomeSize=32m correctedErrorRate=0.001 -trimmed -corrected -pacbio $trimmed
 	"""
 }
 
@@ -63,7 +64,7 @@ process assemble3 {
 	file 'pacbhifi/*.fasta' into assembly3
 	
 	"""
-	canu -p pacbhifi3 -d pacbhifi genomeSize=32m correctedErrorRate=0.0375 -trimmed -corrected -pacbio $trimmed
+	canu -p "${trimmed.baseName}_3" -d pacbhifi genomeSize=32m correctedErrorRate=0.0375 -trimmed -corrected -pacbio $trimmed
 	"""
 }
 
@@ -77,7 +78,7 @@ process assemble7 {
 	file 'pacbhifi/*.fasta' into assembly7
 	
 	"""
-	canu -p pacbhifi7 -d pacbhifi genomeSize=32m correctedErrorRate=0.075 -trimmed -corrected -pacbio $trimmed
+	canu -p "${trimmed.baseName}_7" -d pacbhifi genomeSize=32m correctedErrorRate=0.075 -trimmed -corrected -pacbio $trimmed
 	"""
 }
 
@@ -91,7 +92,7 @@ process assemble10 {
 	file 'pacbhifi/*.fasta' into assembly10
 	
 	"""
-	canu -p pacbhifi7 -d pacbhifi genomeSize=32m correctedErrorRate=0.10 -trimmed -corrected -pacbio $trimmed
+	canu -p "${trimmed.baseName}_10" -d pacbhifi genomeSize=32m correctedErrorRate=0.10 -trimmed -corrected -pacbio $trimmed
 	"""
 }
 
