@@ -8,6 +8,7 @@ pacb_data = Channel.fromPath(params.pacB)
 
 process correct {
 	memory '63G'
+	errorStrategy 'retry'
 	
 	input:
 	path pacbhifi from pacb_data
@@ -23,6 +24,7 @@ process correct {
 
 process trim {
 	memory '63G'
+	errorStrategy 'retry'
 	
 	input:
 	path corrected from reads11
@@ -37,10 +39,12 @@ process trim {
 
 
 //split trim into two channels
-trimfile.into{trim1; trim3; trim7; trim10}
+trimfile.into{trim1; trim3; trim7; trim10; trimOut}
 
+\*
 process assemble1 {
 	memory '96G'
+	errorStrategy 'retry'
 	
 	input:
 	path trimmed from trim1
@@ -52,10 +56,11 @@ process assemble1 {
 	canu -p "${trimmed.baseName}_1" -d pacbhifi genomeSize=32m correctedErrorRate=0.001 -trimmed -corrected -pacbio $trimmed
 	"""
 }
-
+*\
 
 process assemble3 {
 	memory '63G'
+	errorStrategy 'retry'
 	
 	input:
 	path trimmed from trim3
@@ -68,8 +73,10 @@ process assemble3 {
 	"""
 }
 
+\*
 process assemble7 {
 	memory '63G'
+	errorStrategy 'retry'
 	
 	input:
 	path trimmed from trim7
@@ -82,8 +89,10 @@ process assemble7 {
 	"""
 }
 
+
 process assemble10 {
 	memory '63G'
+	errorStrategy 'retry'
 	
 	input:
 	path trimmed from trim10
@@ -95,11 +104,17 @@ process assemble10 {
 	canu -p "${trimmed.baseName}_10" -d pacbhifi genomeSize=32m correctedErrorRate=0.10 -trimmed -corrected -pacbio $trimmed
 	"""
 }
+*\
 
 
 
+\\Create a directory for output and drop assemblies and trimmed files into it
+params.results = "s3://pipe.scratch.3/resources/CanuOut/"
 
+myDir = file(params.results)
 
+assembly3.subscribe { it.copyTo(myDir) }
+trimOut.subscribe { it.copyTo(myDir) }
 
 
 
