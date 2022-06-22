@@ -41,7 +41,7 @@ process trim {
 //split trim into two channels
 trimfile.into{trim1; trim3; trim7; trim10; trimOut}
 
-\*
+/*
 process assemble1 {
 	memory '96G'
 	errorStrategy 'retry'
@@ -56,7 +56,7 @@ process assemble1 {
 	canu -p "${trimmed.baseName}_1" -d pacbhifi genomeSize=32m correctedErrorRate=0.001 -trimmed -corrected -pacbio $trimmed
 	"""
 }
-*\
+*/
 
 process assemble3 {
 	memory '63G'
@@ -73,7 +73,7 @@ process assemble3 {
 	"""
 }
 
-\*
+/*
 process assemble7 {
 	memory '63G'
 	errorStrategy 'retry'
@@ -104,11 +104,10 @@ process assemble10 {
 	canu -p "${trimmed.baseName}_10" -d pacbhifi genomeSize=32m correctedErrorRate=0.10 -trimmed -corrected -pacbio $trimmed
 	"""
 }
-*\
+*/
 
 
-
-\\Create a directory for output and drop assemblies and trimmed files into it
+//Create a directory for output and drop assemblies and trimmed files into it
 params.results = "s3://pipe.scratch.3/resources/CanuOut/"
 
 myDir = file(params.results)
