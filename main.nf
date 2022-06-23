@@ -49,7 +49,7 @@ process assemble1 {
 	path trimmed from trim1
 	
 	output:
-	file 'pacbhifi/*.fasta' into assembly1
+	file "pacbhifi/*.fasta" into assembly1
 	
 	"""
 	canu -p "${trimmed.baseName}_1" -d pacbhifi genomeSize=32m correctedErrorRate=0.001 -trimmed -corrected -pacbio $trimmed
