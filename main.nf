@@ -17,7 +17,7 @@ process correct {
 	file "pacb/${pacbhifi.baseName}.correctedReads.fasta.gz" into reads11
 	
 	"""
-	canu -correct -p ${pacbhifi.baseName} -d pacb genomeSize=32m corMemory=16 -pacbio $pacbhifi
+	canu -correct -p ${pacbhifi.baseName} -d pacb genomeSize=32m corMemory=16 corOutCoverage=150 -pacbio $pacbhifi
 	"""
 }
 
@@ -39,6 +39,13 @@ process trim {
 
 //split trim into two channels
 trimfile.into{trim1; trim3; trim7; trim10; trimOut}
+
+//Drop off a results copy of the trimmed files
+params.trims = "s3://pipe.scratch.3/resources/CanuTrims/"
+
+trimDir = file(params.results)
+
+trimOut.subscribe { it.copyTo(trimDir) }
 
 /*
 process assemble1 {
@@ -111,7 +118,7 @@ params.results = "s3://pipe.scratch.3/resources/CanuOut/"
 
 myDir = file(params.results)
 
-trimOut.subscribe { it.copyTo(myDir) }
+
 assembly3.subscribe { it.copyTo(myDir) }
 
 
