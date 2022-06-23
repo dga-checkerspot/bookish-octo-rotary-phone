@@ -65,7 +65,7 @@ process assemble3 {
 	path trimmed from trim3
 	
 	output:
-	file 'pacbhifi/*.fasta' into assembly3
+	file "pacbhifi/*.fasta" into assembly3
 	
 	"""
 	canu -p "${trimmed.baseName}_3" -d pacbhifi genomeSize=32m correctedErrorRate=0.0375 -trimmed -corrected -pacbio $trimmed
@@ -81,7 +81,7 @@ process assemble7 {
 	path trimmed from trim7
 	
 	output:
-	file 'pacbhifi/*.fasta' into assembly7
+	file "pacbhifi/*.fasta" into assembly7
 	
 	"""
 	canu -p "${trimmed.baseName}_7" -d pacbhifi genomeSize=32m correctedErrorRate=0.075 -trimmed -corrected -pacbio $trimmed
@@ -97,7 +97,7 @@ process assemble10 {
 	path trimmed from trim10
 	
 	output:
-	file 'pacbhifi/*.fasta' into assembly10
+	file "pacbhifi/*.fasta" into assembly10
 	
 	"""
 	canu -p "${trimmed.baseName}_10" -d pacbhifi genomeSize=32m correctedErrorRate=0.10 -trimmed -corrected -pacbio $trimmed
@@ -111,8 +111,9 @@ params.results = "s3://pipe.scratch.3/resources/CanuOut/"
 
 myDir = file(params.results)
 
-assembly3.subscribe { it.copyTo(myDir) }
 trimOut.subscribe { it.copyTo(myDir) }
+assembly3.subscribe { it.copyTo(myDir) }
+
 
 
 
