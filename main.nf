@@ -14,11 +14,10 @@ process correct {
 	path pacbhifi from pacb_data
 	
 	output:
-	file "pacb/${pacbhifi.baseName}" into reads11
+	file "pacb/${pacbhifi.baseName}.correctedReads.fasta.gz" into reads11
 	
 	"""
 	canu -correct -p ${pacbhifi.baseName} -d pacb genomeSize=32m corMemory=16 -pacbio $pacbhifi
-	mv 
 	"""
 }
 
