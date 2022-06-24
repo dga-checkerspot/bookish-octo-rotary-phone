@@ -72,7 +72,7 @@ process assemble3 {
 	path trimmed from trim3
 	
 	output:
-	file "pacbhifi/*.fasta" into assembly3
+	file "pacbhifi/${trimmed.baseName}_3.contigs.fasta" into assembly3
 	
 	"""
 	canu -p "${trimmed.baseName}_3" -d pacbhifi genomeSize=32m correctedErrorRate=0.0375 -trimmed -corrected -pacbio $trimmed
