@@ -43,7 +43,7 @@ trimfile.into{trim1; trim3; trim7; trim10; trimOut}
 //Drop off a results copy of the trimmed files
 params.trims = "s3://pipe.scratch.3/resources/CanuTrims/"
 
-trimDir = file(params.results)
+trimDir = file(params.trims)
 
 trimOut.subscribe { it.copyTo(trimDir) }
 
